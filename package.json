@@ -1,0 +1,39 @@
+{
+    "name": "@wocker/memcached-plugin",
+    "version": "1.0.0",
+    "author": "Kris Papercut <krispcut@gmail.com>",
+    "description": "Memcached plugin for wocker",
+    "license": "MIT",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "keywords": [
+        "wocker",
+        "docker",
+        "memcached",
+        "plugin"
+    ],
+    "homepage": "https://kearisp.github.io/wocker/docs/plugins/memcached",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kearisp/wocker-memcached-plugin.git"
+    },
+    "bugs": {
+        "url": "https://github.com/kearisp/wocker-memcached-plugin/issues"
+    },
+    "scripts": {
+        "prepare": "npm run build",
+        "watch": "tsc -w",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@wocker/core": "^1.0.21",
+        "@wocker/utils": "^1.0.8",
+        "cli-table3": "^0.6.5"
+    },
+    "devDependencies": {
+        "@types/dockerode": "^3.3.32",
+        "@types/node": "^22.10.2",
+        "typescript": "^5.7.2"
+    }
+}
