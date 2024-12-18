@@ -16,13 +16,13 @@ export class MemcachedController {
     ) {}
 
     @Command("memcached:ls")
-    @Description("")
+    @Description("Lists all Memcached services in a table format.")
     public async list(): Promise<string> {
         return this.memcachedService.listTable();
     }
 
     @Command("memcached:create [name]")
-    @Description("")
+    @Description("Creates a Memcached service with the specified name.")
     public async create(
         @Param("name")
         name?: string
@@ -31,20 +31,20 @@ export class MemcachedController {
     }
 
     @Command("memcached:destroy <name>")
-    @Description("")
+    @Description("Destroys a Memcached service by name, with optional confirmation flags.")
     public async destroy(
         @Param("name")
         name: string,
         @Option("force", {
             type: "boolean",
             alias: "f",
-            description: ""
+            description: "Force destruction without prompts"
         })
         force?: boolean,
         @Option("yes", {
             type: "boolean",
             alias: "y",
-            description: ""
+            description: "Skip confirmation"
         })
         yes?: boolean
     ): Promise<void> {
@@ -52,14 +52,14 @@ export class MemcachedController {
     }
 
     @Command("memcached:start [name]")
-    @Description("")
+    @Description("Starts a Memcached service by name, with an option to restart it if it's already running.")
     public async start(
         @Param("name")
         name?: string,
         @Option("restart", {
             type: "boolean",
             alias: "r",
-            description: ""
+            description: "Restart the service if it is already running"
         })
         restart?: boolean
     ): Promise<void> {
@@ -67,7 +67,7 @@ export class MemcachedController {
     }
 
     @Command("memcached:stop [name]")
-    @Description("")
+    @Description("Stops a running Memcached service by its name. If no name is provided, stops the default service.")
     public async stop(
         @Param("name")
         name?: string
