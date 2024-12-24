@@ -138,7 +138,8 @@ export class MemcachedService {
         if(!container) {
             container = await this.dockerService.createContainer({
                 name: service.containerName,
-                image: "memcached:latest"
+                image: "memcached:latest",
+                restart: "always"
             });
         }
 
