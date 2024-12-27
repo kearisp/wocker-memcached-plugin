@@ -163,4 +163,17 @@ export class MemcachedService {
 
         console.info(`Memcached service "${service.name}" stopped`);
     }
+
+    public use(name?: string): string|void {
+        if(!name) {
+            const service = this.config.getDefaultService();
+
+            return service.name;
+        }
+
+        const service = this.config.getService(name);
+
+        this.config.default = service.name;
+        this.config.save();
+    }
 }
