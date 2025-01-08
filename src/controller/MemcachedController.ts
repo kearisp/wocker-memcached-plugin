@@ -38,7 +38,7 @@ export class MemcachedController {
         @Option("force", {
             type: "boolean",
             alias: "f",
-            description: "Force destruction without prompts"
+            description: "Force destruction"
         })
         force?: boolean,
         @Option("yes", {
@@ -73,5 +73,14 @@ export class MemcachedController {
         name?: string
     ): Promise<void> {
         await this.memcachedService.stop(name);
+    }
+
+    @Command("memcached:use [name]")
+    @Description("Sets a specified Memcached service as the default or retrieves the current default service name if no service is specified.")
+    public use(
+        @Param("name")
+        name?: string
+    ): string|void {
+        return this.memcachedService.use(name);
     }
 }
