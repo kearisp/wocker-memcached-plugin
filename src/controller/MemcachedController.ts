@@ -27,7 +27,9 @@ export class MemcachedController {
         @Param("name")
         name?: string
     ): Promise<void> {
-        await this.memcachedService.create(name);
+        await this.memcachedService.create({
+            name
+        });
     }
 
     @Command("memcached:destroy <name>")

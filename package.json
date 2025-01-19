@@ -1,6 +1,6 @@
 {
     "name": "@wocker/memcached-plugin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "description": "Memcached plugin for wocker",
     "license": "MIT",
@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "@wocker/core": "^1.0.21",
-        "@wocker/utils": "^1.0.8",
+        "@wocker/utils": "^1.0.9",
         "cli-table3": "^0.6.5"
     },
     "devDependencies": {
