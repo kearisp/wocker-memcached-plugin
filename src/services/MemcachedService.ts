@@ -9,7 +9,7 @@ import {promptText, promptConfirm} from "@wocker/utils";
 import CliTable from "cli-table3";
 
 import {Config, ConfigProps} from "../makes/Config";
-import {Service} from "../makes/Service";
+import {Service, ServiceProps} from "../makes/Service";
 
 
 @Injectable()
@@ -70,9 +70,14 @@ export class MemcachedService {
         return table.toString();
     }
 
-    public async create(name?: string) {
-        if(!name || this.config.hasService(name)) {
-            name = await promptText({
+    public async create(serviceProps: Partial<ServiceProps> = {}): Promise<void> {
+        if(serviceProps.name && this.config.hasService(serviceProps.name)) {
+            console.info(`Service "${serviceProps.name}" is already exists`);
+            delete serviceProps.name;
+        }
+
+        if(!serviceProps.name) {
+            serviceProps.name = await promptText({
                 message: "Service name:",
                 validate: (name?: string) => {
                     if(!name) {
@@ -80,7 +85,7 @@ export class MemcachedService {
                     }
 
                     if(this.config.hasService(name)) {
-                        return "Service already exists";
+                        return `Service "${name}" already exists`;
                     }
 
                     return true;
@@ -88,9 +93,7 @@ export class MemcachedService {
             }) as string;
         }
 
-        const service = new Service({
-            name
-        });
+        const service = new Service(serviceProps as ServiceProps);
 
         this.config.setService(service);
         this.config.save();
@@ -120,7 +123,7 @@ export class MemcachedService {
         this.config.save();
     }
 
-    public async start(name?: string, restart?: boolean) {
+    public async start(name?: string, restart?: boolean): Promise<void> {
         if(!name && !this.config.hasDefaultService()) {
             await this.create();
         }
@@ -138,7 +141,7 @@ export class MemcachedService {
         if(!container) {
             container = await this.dockerService.createContainer({
                 name: service.containerName,
-                image: "memcached:latest",
+                image: service.imageTag,
                 restart: "always"
             });
         }
