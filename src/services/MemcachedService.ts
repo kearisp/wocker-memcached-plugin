@@ -61,7 +61,7 @@ export class MemcachedService {
             ]
         });
 
-        for(const service of this.config.services.items) {
+        for(const service of this.config.services) {
             table.push([
                 service.name
             ]);

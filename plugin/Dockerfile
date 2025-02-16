@@ -1,4 +1,3 @@
-# Використовуємо офіційний образ PHP з Apache
 FROM php:8.2-apache
 
 ARG MEMCACHE_ENABLE=true
@@ -19,21 +18,11 @@ RUN if [ "$MEMCACHED_ENABLE" = "true" ]; then \
         pecl install memcached && docker-php-ext-enable memcached; \
     fi
 
-## Встановлюємо необхідні пакети для PHP та Memcached
-#RUN apt-get update && apt-get install -y \
-#    libmemcached-dev \
-#    zlib1g-dev \
-#    && docker-php-ext-install opcache \
-#    && pecl install memcached \
-#    && docker-php-ext-enable memcached
-
-# Завантажуємо phpMemcachedAdmin
 RUN apt-get install -y git && \
     git clone https://github.com/elijaa/phpmemcachedadmin.git /var/www/html/phpmemcachedadmin
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Встановлюємо права на файли
 RUN chown -R www-data:www-data /var/www/html/phpmemcachedadmin && \
     cd /var/www/html/phpmemcachedadmin/Config && \
     mv ./Memcache.sample.php ./Memcache.php && \
@@ -50,17 +39,13 @@ RUN apt-get update && \
     cd /var/www/html/phpmemcachedadmin; \
     composer install
 
-# Копіюємо скрипт налаштування
 COPY ./config-entrypoint.sh /usr/local/bin/config-entrypoint.sh
 RUN chmod +x /usr/local/bin/config-entrypoint.sh
 
-# Встановлюємо базову конфігурацію Apache
 COPY ./apache-config.conf /etc/apache2/sites-available/000-default.conf
 
-# Відкриваємо порт
 EXPOSE 80
 
-# Запускаємо скрипт конфігурації перед запуском Apache
 ENTRYPOINT ["/usr/local/bin/config-entrypoint.sh"]
 CMD ["apache2-foreground"]
 
