@@ -1,5 +1,6 @@
 import {
     Controller,
+    Completion,
     Description,
     Command,
     Param,
@@ -84,5 +85,10 @@ export class MemcachedController {
         name?: string
     ): string|void {
         return this.memcachedService.use(name);
+    }
+
+    @Completion("name")
+    public getNames(): string[] {
+        return this.memcachedService.config.services.map((service) => service.name);
     }
 }
