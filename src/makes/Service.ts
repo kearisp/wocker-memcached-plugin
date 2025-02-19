@@ -25,11 +25,11 @@ export class Service extends Config<ServiceProps> {
         this.imageVersion = imageVersion;
     }
 
-    public get imageTag(): string {
-        return `${this.imageName}:${this.imageVersion}`;
-    }
-
     public get containerName(): string {
         return `memcached-${this.name}.ws`;
+    }
+
+    public get imageTag(): string {
+        return `${this.imageName}:${this.imageVersion}`;
     }
 }
