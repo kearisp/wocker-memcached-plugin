@@ -7,13 +7,13 @@ export type ServiceProps = {
 export class Service {
     public name: string;
     public imageName: string;
-    public imageVersion: string;
+    public imageVersion?: string;
 
     public constructor(props: ServiceProps) {
         const {
             name,
             imageName = "memcached",
-            imageVersion = "latest"
+            imageVersion
         } = props;
 
         this.name = name;
@@ -26,6 +26,10 @@ export class Service {
     }
 
     public get imageTag(): string {
+        if(!this.imageVersion) {
+            return this.imageName;
+        }
+
         return `${this.imageName}:${this.imageVersion}`;
     }
 

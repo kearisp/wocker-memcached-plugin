@@ -34,7 +34,7 @@ export abstract class Config {
         return service;
     }
 
-    public getDefaultService() {
+    public getDefaultService(): Service {
         if(!this.default) {
             throw new Error("No services are installed by default");
         }
