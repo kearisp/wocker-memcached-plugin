@@ -5,7 +5,7 @@ import {
     PLUGIN_DIR_KEY,
     FileSystem
 } from "@wocker/core";
-import {promptText, promptConfirm} from "@wocker/utils";
+import {promptInput, promptConfirm} from "@wocker/utils";
 import CliTable from "cli-table3";
 
 import {Config, ConfigProps} from "../makes/Config";
@@ -77,8 +77,8 @@ export class MemcachedService {
         }
 
         if(!serviceProps.name) {
-            serviceProps.name = await promptText({
-                message: "Service name:",
+            serviceProps.name = await promptInput({
+                message: "Service name",
                 validate: (name?: string) => {
                     if(!name) {
                         return "Mandatory";
