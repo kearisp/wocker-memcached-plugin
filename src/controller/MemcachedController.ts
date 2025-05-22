@@ -11,6 +11,7 @@ import {MemcachedService} from "../services/MemcachedService";
 
 
 @Controller()
+@Description("Memcached commands")
 export class MemcachedController {
     public constructor(
         protected readonly memcachedService: MemcachedService
