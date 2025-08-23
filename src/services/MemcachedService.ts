@@ -7,8 +7,7 @@ import {
 } from "@wocker/core";
 import {promptInput, promptConfirm} from "@wocker/utils";
 import CliTable from "cli-table3";
-
-import {Config, ConfigProps} from "../makes/Config";
+import {Config} from "../makes/Config";
 import {Service, ServiceProps} from "../makes/Service";
 
 
@@ -32,23 +31,7 @@ export class MemcachedService {
 
     public get config(): Config {
         if(!this._config) {
-            const fs = this.fs;
-
-            const data: ConfigProps = fs.exists("config.json")
-                ? fs.readJSON("config.json")
-                : {};
-
-            this._config = new class extends Config {
-                public save(): void {
-                    if(!fs.exists("")) {
-                        fs.mkdir("", {
-                            recursive: true
-                        });
-                    }
-
-                    fs.writeJSON("config.json", this.toObject());
-                }
-            }(data);
+            this._config = Config.make(this.fs);
         }
 
         return this._config;
@@ -57,13 +40,15 @@ export class MemcachedService {
     public async listTable(): Promise<string> {
         const table = new CliTable({
             head: [
-                "Name"
+                "Name",
+                "Image"
             ]
         });
 
         for(const service of this.config.services) {
             table.push([
-                service.name
+                service.name,
+                service.imageTag
             ]);
         }
 
@@ -159,7 +144,7 @@ export class MemcachedService {
         }
     }
 
-    public async stop(name?: string) {
+    public async stop(name?: string): Promise<void> {
         const service = this.config.getServiceOrDefault(name);
 
         await this.dockerService.removeContainer(service.containerName);
