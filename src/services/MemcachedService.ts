@@ -144,7 +144,7 @@ export class MemcachedService {
         }
     }
 
-    public async stop(name?: string) {
+    public async stop(name?: string): Promise<void> {
         const service = this.config.getServiceOrDefault(name);
 
         await this.dockerService.removeContainer(service.containerName);
