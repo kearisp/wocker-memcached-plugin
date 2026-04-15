@@ -1,6 +1,7 @@
 {
     "name": "@wocker/memcached-plugin",
-    "version": "1.0.10",
+    "type": "commonjs",
+    "version": "1.0.11",
     "author": "Kris Papercut <krispcut@gmail.com>",
     "description": "Memcached plugin for wocker",
     "license": "MIT",
