@@ -48,7 +48,7 @@ export class MemcachedService {
         for(const service of this.config.services) {
             table.push([
                 service.name,
-                service.imageTag
+                service.image
             ]);
         }
 
@@ -126,7 +126,7 @@ export class MemcachedService {
         if(!container) {
             container = await this.dockerService.createContainer({
                 name: service.containerName,
-                image: service.imageTag,
+                image: service.image,
                 restart: "always"
             });
         }
